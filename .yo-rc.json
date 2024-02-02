@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "16.20.2",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.12.0"
+    },
+    "version": "1.18.1",
+    "libraryName": "events-calendar",
+    "libraryId": "58b2ccb6-d102-4f2f-b9c0-3a8fb03fed39",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "EventsCalendar",
+    "solutionShortDescription": "EventsCalendar description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

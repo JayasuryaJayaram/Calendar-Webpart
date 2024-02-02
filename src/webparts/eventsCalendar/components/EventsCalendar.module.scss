@@ -1,0 +1,155 @@
+@import "~@fluentui/react/dist/sass/References.scss";
+
+.eventsCalendar {
+  overflow: hidden;
+  padding: 1em;
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+  &.teams {
+    font-family: $ms-font-family-fallbacks;
+  }
+}
+
+.welcome {
+  text-align: center;
+}
+
+.welcomeImage {
+  width: 100%;
+  max-width: 420px;
+}
+
+.links {
+  a {
+    text-decoration: none;
+    color: "[theme:link, default:#03787c]";
+    color: var(
+      --link
+    ); // note: CSS Custom Properties support is limited to modern browsers only
+
+    &:hover {
+      text-decoration: underline;
+      color: "[theme:linkHovered, default: #014446]";
+      color: var(
+        --linkHovered
+      ); // note: CSS Custom Properties support is limited to modern browsers only
+    }
+  }
+}
+
+.calendarApp {
+  display: flex;
+  min-height: 100%;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.calendarAppMain {
+  flex-grow: 1;
+  padding: 3em;
+}
+
+.DayCellStyles {
+  background-color: #ececec;
+}
+
+.popoverButton {
+  width: 100%;
+  text-align: left;
+  background-color: rgba(169, 211, 242, 0.9);
+  border-radius: 4px;
+  padding: 5px;
+  overflow: hidden;
+  color: rgb(30, 30, 30);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: 7px solid #0078d4;
+  cursor: pointer;
+}
+
+.popoverButton b,
+.popoverButton span {
+  font-size: 12px;
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
+    -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
+.popoverBox {
+  width: 380px;
+  background-color: #fff;
+  box-shadow: 1px 1px #ececec;
+  border: none;
+  z-index: 2;
+  border-radius: 2px;
+  box-shadow: 1px 2px 4px #81818187;
+  padding-bottom: 5px;
+}
+
+.popheader {
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
+    -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  background-color: #ececec;
+  margin: 0px;
+  padding: 10px 10px;
+  font-size: 14px;
+}
+
+.popheader span {
+  font-weight: 100;
+}
+
+.popBody {
+  padding: 10px;
+}
+
+.popheading {
+  font-size: 21px;
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
+    -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  margin: 10px 5px;
+  font-weight: 600;
+  border-bottom: 1px solid #42424224;
+  padding: 8px 0px;
+}
+
+.popContent {
+  font-size: 14px;
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
+    -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  margin: 10px 5px;
+  border-bottom: 1px solid #42424224;
+  padding-bottom: 6px;
+}
+
+.contentStyle {
+  padding: 2px;
+  overflow: hidden;
+}
+
+.popoverIcon {
+  position: relative;
+  top: 5px;
+  margin-right: 10px;
+}
+
+.joinBtn {
+  width: 100px;
+  height: 30px;
+  background-color: #0078d4;
+  border: none;
+  margin-left: 40px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.joinBtn:focus {
+  border: none;
+}
+
+.joinBtn a {
+  color: #fff;
+  font-size: 14px;
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
+    -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
