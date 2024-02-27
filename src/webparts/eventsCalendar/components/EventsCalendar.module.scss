@@ -1,5 +1,14 @@
 @import "~@fluentui/react/dist/sass/References.scss";
 
+:global {
+  #workbenchPageContent,
+  .CanvasComponent.LCS .CanvasZone,
+  div[data-sp-feature-tag="workbenchPageContent"],
+  div[data-sp-feature-tag="CanvasComponent.LCS.CanvasZone"] {
+    max-width: 100% !important;
+  }
+}
+
 .eventsCalendar {
   overflow: hidden;
   padding: 1em;
@@ -58,7 +67,7 @@
   text-align: left;
   background-color: rgba(169, 211, 242, 0.9);
   border-radius: 4px;
-  padding: 5px;
+  padding: 1px 5px;
   overflow: hidden;
   color: rgb(30, 30, 30);
   border-top: none;
@@ -66,6 +75,8 @@
   border-bottom: none;
   border-left: 7px solid #0078d4;
   cursor: pointer;
+  text-wrap: nowrap;
+  height: -webkit-fill-available;
 }
 
 .popoverButton b,
@@ -78,12 +89,12 @@
 .popoverBox {
   width: 380px;
   background-color: #fff;
-  box-shadow: 1px 1px #ececec;
+  // box-shadow: 1px 1px #ececec;
   border: none;
   z-index: 2;
-  border-radius: 2px;
-  box-shadow: 1px 2px 4px #81818187;
-  padding-bottom: 5px;
+  // border-radius: 2px;
+  // box-shadow: 1px 2px 4px #81818187;
+  // padding-bottom: 5px;
 }
 
 .popheader {
@@ -104,6 +115,7 @@
 }
 
 .popheading {
+  display: flex;
   font-size: 21px;
   font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
     -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
@@ -125,11 +137,12 @@
 .contentStyle {
   padding: 2px;
   overflow: hidden;
+  text-align: justify;
 }
 
 .popoverIcon {
   position: relative;
-  top: 5px;
+  top: 7px;
   margin-right: 10px;
 }
 
@@ -141,10 +154,16 @@
   margin-left: 40px;
   cursor: pointer;
   border-radius: 3px;
+  color: #fff;
 }
 
 .joinBtn:focus {
   border: none;
+}
+.joinBtn:hover {
+  border: none;
+  box-shadow: none;
+  color: #fff;
 }
 
 .joinBtn a {
