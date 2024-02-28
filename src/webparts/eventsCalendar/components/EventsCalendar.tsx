@@ -55,12 +55,30 @@ var customStyles = `
     padding: 0px;
   }
 
+  :where(.css-dev-only-do-not-override-1qhpsh8).ant-popover .ant-popover-inner {
+    padding: 0px;
+  }
+
   :where(.css-dev-only-do-not-override-1qhpsh8).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
     color: #000;
   }
 
   .fc-direction-ltr .fc-daygrid-event.fc-event-end {
     height: 27px;
+  }
+
+  @media screen and (max-width: 426px) {
+    .fc .fc-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      line-height: 45px;
+    }
+    .n_c_8474018e {
+      padding: 0px;
+    }
+    .calendarAppMain_89723c8a {
+      padding: 0px;
+    }
   }
 }
 `;
