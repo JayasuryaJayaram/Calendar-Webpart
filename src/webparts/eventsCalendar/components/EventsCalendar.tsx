@@ -11,14 +11,14 @@ import styles from "./EventsCalendar.module.scss";
 import { Popover } from "antd";
 
 interface IFormattedEvent {
-  subject: string;
-  startDate: string;
-  endDate: string;
-  startTime: string;
-  endTime: string;
-  eventDate: string;
-  bodyPreview?: string;
-  joinUrl?: string;
+  subject: any;
+  startDate: any;
+  endDate: any;
+  startTime: any;
+  endTime: any;
+  eventDate: any;
+  bodyPreview?: any;
+  joinUrl?: any;
 }
 
 var customStyles = `
@@ -105,7 +105,6 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
             }
 
             const calendarEvents: MicrosoftGraph.Event[] = eventsResponse.value;
-            // console.log("CalendarEvents", calendarEvents);
             setEvents(
               calendarEvents.map((event) => ({
                 ...event,
@@ -113,7 +112,6 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
                 bodyPreview: event.bodyPreview || "",
                 daysOfWeek: event.recurrence?.pattern?.daysOfWeek?.map(
                   (day: string) => {
-                    // Convert daysOfWeek to numbers
                     switch (day) {
                       case "sunday":
                         return 0;
@@ -141,30 +139,40 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
           });
       });
   }, [props.context.msGraphClientFactory]);
-  // console.log("Events", events);
+  console.log("events", events);
 
   const eventContent = (eventInfo: any) => {
     console.log("eventInfo", eventInfo);
 
+    const event: any = events.find(
+      (evt: any) => evt.subject === eventInfo.event.title
+    ); // Find the event in the events state
+    if (!event) return null;
+
     const formattedEvent: IFormattedEvent = {
-      subject: eventInfo.event.title,
-      startDate: eventInfo.event.startStr,
-      startTime: new Date(eventInfo.event.start).toLocaleString("en-US", {
+      subject: event.subject,
+      startDate: event.start.dateTime,
+      startTime: new Date(
+        new Date(event.start.dateTime + "Z").toISOString()
+      ).toLocaleString("en-US", {
         hour: "numeric",
         minute: "numeric",
         hour12: true,
       }),
-      endDate: eventInfo.event.endStr,
-      endTime: new Date(eventInfo.event.end).toLocaleString("en-US", {
+      endDate: event.end.dateTime,
+      endTime: new Date(
+        new Date(event.end.dateTime + "Z").toISOString()
+      ).toLocaleString("en-US", {
         hour: "numeric",
         minute: "numeric",
         hour12: true,
       }),
-      eventDate: eventInfo.event.start.toString(),
-      bodyPreview: eventInfo.event.extendedProps.bodyPreview,
-      joinUrl: eventInfo.event.extendedProps.joinUrl,
+      eventDate: new Date(event.start.dateTime).toString(),
+      bodyPreview: event.bodyPreview,
+      joinUrl: event.joinUrl,
     };
-    // console.log("formattedEvent", formattedEvent);
+
+    console.log("formattedEvent", formattedEvent);
 
     const content = (
       <div className={styles.popoverBox}>
@@ -261,13 +269,11 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
           }}
           events={events.map((event: any) => ({
             title: event.subject,
-            // Adjust start time to account for timezone offset
-            start: new Date(event.start.dateTime + "Z").toISOString(),
-            // Adjust end time to account for timezone offset
-            end: new Date(event.end.dateTime + "Z").toISOString(),
-            daysOfWeek: event.daysOfWeek, // Pass daysOfWeek for recurring events
-            startRecur: event.startRecur, // Pass startRecur for recurring events
-            endRecur: event.endRecur, // Pass endRecur for recurring events
+            start: event.start.dateTime,
+            end: event.end.dateTime,
+            daysOfWeek: event.daysOfWeek,
+            startRecur: event.startRecur,
+            endRecur: event.endRecur,
             bodyPreview: event.bodyPreview,
             joinUrl: event.joinUrl,
           }))}
