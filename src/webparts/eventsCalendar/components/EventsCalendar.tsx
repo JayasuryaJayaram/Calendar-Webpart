@@ -90,6 +90,7 @@ var customStyles = `
 const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
   const [events, setEvents] = useState<MicrosoftGraph.Event[]>([]);
 
+  //to fetch events when component mounts or context changes
   useEffect(() => {
     props.context.msGraphClientFactory
       .getClient()
@@ -133,20 +134,21 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
                   }
                 ),
                 startRecur: event.recurrence?.range?.startDate,
-                endRecur: event.recurrence?.range?.endDate, // Changed to endDate
+                endRecur: event.recurrence?.range?.endDate,
               }))
             );
           });
       });
   }, [props.context.msGraphClientFactory]);
-  console.log("events", events);
+  // console.log("events", events);
 
+  // Function to customize event content in FullCalendar
   const eventContent = (eventInfo: any) => {
-    console.log("eventInfo", eventInfo);
+    // console.log("eventInfo", eventInfo);
 
     const event: any = events.find(
       (evt: any) => evt.subject === eventInfo.event.title
-    ); // Find the event in the events state
+    ); // To find the event in the events state that matches with eventInfo
     if (!event) return null;
 
     const formattedEvent: IFormattedEvent = {
@@ -158,7 +160,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
         hour: "numeric",
         minute: "numeric",
         hour12: true,
-      }),
+      }), //Event time in hh.mm AM/PM format in ISO
       endDate: event.end.dateTime,
       endTime: new Date(
         new Date(event.end.dateTime + "Z").toISOString()
@@ -174,6 +176,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
 
     console.log("formattedEvent", formattedEvent);
 
+    // JSX for event popover content
     const content = (
       <div className={styles.popoverBox}>
         <div className={styles.popheader}>
@@ -242,6 +245,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
     );
   };
 
+  // Render the EventsCalendar component
   return (
     <div className={styles.calendarApp}>
       <style>{customStyles}</style>
@@ -276,7 +280,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
             endRecur: event.endRecur,
             bodyPreview: event.bodyPreview,
             joinUrl: event.joinUrl,
-          }))}
+          }))} //mapping event details
           eventContent={eventContent}
         />
       </div>
