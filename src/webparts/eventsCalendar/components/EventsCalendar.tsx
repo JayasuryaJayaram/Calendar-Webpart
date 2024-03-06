@@ -67,6 +67,10 @@ var customStyles = `
     height: 27px;
   }
 
+  .fc-h-event .fc-event-main {
+    height: 24px;
+  }
+
   @media screen and (max-width: 426px) {
     .fc .fc-toolbar {
       display: flex;
@@ -101,20 +105,47 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
             }
 
             const calendarEvents: MicrosoftGraph.Event[] = eventsResponse.value;
+            // console.log("CalendarEvents", calendarEvents);
             setEvents(
               calendarEvents.map((event) => ({
                 ...event,
                 joinUrl: event.onlineMeeting?.joinUrl || "",
-                bodyPreview: event.bodyPreview || "", // Use bodyPreview if available, otherwise default to an empty string
+                bodyPreview: event.bodyPreview || "",
+                daysOfWeek: event.recurrence?.pattern?.daysOfWeek?.map(
+                  (day: string) => {
+                    // Convert daysOfWeek to numbers
+                    switch (day) {
+                      case "sunday":
+                        return 0;
+                      case "monday":
+                        return 1;
+                      case "tuesday":
+                        return 2;
+                      case "wednesday":
+                        return 3;
+                      case "thursday":
+                        return 4;
+                      case "friday":
+                        return 5;
+                      case "saturday":
+                        return 6;
+                      default:
+                        return -1;
+                    }
+                  }
+                ),
+                startRecur: event.recurrence?.range?.startDate,
+                endRecur: event.recurrence?.range?.endDate, // Changed to endDate
               }))
             );
-
-            console.log("CalendarEvents", calendarEvents);
           });
       });
   }, [props.context.msGraphClientFactory]);
+  // console.log("Events", events);
 
   const eventContent = (eventInfo: any) => {
+    console.log("eventInfo", eventInfo);
+
     const formattedEvent: IFormattedEvent = {
       subject: eventInfo.event.title,
       startDate: eventInfo.event.startStr,
@@ -133,6 +164,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
       bodyPreview: eventInfo.event.extendedProps.bodyPreview,
       joinUrl: eventInfo.event.extendedProps.joinUrl,
     };
+    // console.log("formattedEvent", formattedEvent);
 
     const content = (
       <div className={styles.popoverBox}>
@@ -193,7 +225,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
     );
 
     return (
-      <Popover content={content} trigger="click" placement="right">
+      <Popover content={content} trigger={["click", "hover"]} placement="right">
         <button className={styles.popoverButton}>
           <span>{formattedEvent.startTime} </span>
           <b> {formattedEvent.subject}</b>
@@ -233,6 +265,9 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
             start: new Date(event.start.dateTime + "Z").toISOString(),
             // Adjust end time to account for timezone offset
             end: new Date(event.end.dateTime + "Z").toISOString(),
+            daysOfWeek: event.daysOfWeek, // Pass daysOfWeek for recurring events
+            startRecur: event.startRecur, // Pass startRecur for recurring events
+            endRecur: event.endRecur, // Pass endRecur for recurring events
             bodyPreview: event.bodyPreview,
             joinUrl: event.joinUrl,
           }))}
