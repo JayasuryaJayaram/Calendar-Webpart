@@ -9,6 +9,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { IEventsCalendarProps } from "./IEventsCalendarProps";
 import styles from "./EventsCalendar.module.scss";
 import { Popover } from "antd";
+// import { EnvironmentOutlined } from "@ant-design/icons";
 
 interface IFormattedEvent {
   subject: any;
@@ -17,7 +18,7 @@ interface IFormattedEvent {
   startTime: any;
   endTime: any;
   eventDate: any;
-  bodyPreview?: any;
+  location?: any;
   joinUrl?: any;
 }
 
@@ -140,7 +141,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
           });
       });
   }, [props.context.msGraphClientFactory]);
-  // console.log("events", events);
+  console.log("events", events);
 
   // Function to customize event content in FullCalendar
   const eventContent = (eventInfo: any) => {
@@ -170,7 +171,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
         hour12: true,
       }),
       eventDate: new Date(event.start.dateTime).toString(),
-      bodyPreview: event.bodyPreview,
+      location: event.location.displayName,
       joinUrl: event.joinUrl,
     };
 
@@ -214,15 +215,21 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
           </div>
           <div
             className={styles.popContent}
-            style={{ display: formattedEvent.bodyPreview ? "flex" : "none" }}
+            style={{ display: formattedEvent.location ? "flex" : "none" }}
           >
             <img
-              src={require("../assets/Icon3.svg")}
+              src={require("../assets/Icon4.png")}
               alt="Icon"
               className={styles.popoverIcon}
-              style={{ top: "1px" }}
+              style={{ width: "25px", height: "25px", top: "15px" }}
             />
-            <p className={styles.contentStyle}>{formattedEvent.bodyPreview}</p>
+            {/* <span>
+              <EnvironmentOutlined
+                rev={undefined}
+                className={styles.popoverIcon}
+              />
+            </span> */}
+            <p className={styles.contentStyle}>{formattedEvent.location}</p>
           </div>
           <div style={{ display: formattedEvent.joinUrl ? "flex" : "none" }}>
             <button className={styles.joinBtn}>
@@ -236,7 +243,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
     );
 
     return (
-      <Popover content={content} trigger={["click", "hover"]} placement="right">
+      <Popover content={content} trigger={["click"]} placement="right">
         <button className={styles.popoverButton}>
           <span>{formattedEvent.startTime} </span>
           <b> {formattedEvent.subject}</b>
@@ -282,6 +289,7 @@ const EventsCalendar: React.FC<IEventsCalendarProps> = (props: any) => {
             joinUrl: event.joinUrl,
           }))} //mapping event details
           eventContent={eventContent}
+          dayMaxEventRows={true}
         />
       </div>
     </div>
